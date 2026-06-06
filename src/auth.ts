@@ -3,9 +3,9 @@ import Credentials from 'next-auth/providers/credentials';
 import { LoginResponse } from './lib/types/auth';
 
 export const authOptions: NextAuthOptions = {
-  pages:{
+  pages: {
     signIn: '/login',
-    signOut: '/login'
+    signOut: '/login',
   },
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
@@ -46,15 +46,15 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt: async ({ token, user }) => {
       if (user) {
-        token.accessToken = user.accessToken;
-        token.user = user.user;
+        token.accessToken = user?.accessToken;
+        token.user = user?.user;
       }
       return token;
     },
 
     session: async ({ session, token }) => {
       session.user = token.user;
-      session.accessToken = token.accessToken;
+
       return session;
     },
   },

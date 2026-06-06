@@ -6,7 +6,7 @@ import CarouselDemo from './hero-carousel';
 
 export function CardDemo() {
   return (
-    <section className="mt-10">
+    <section className="mx-auto mt-10">
       <div className="flex items-center justify-center gap-6">
         <div className="relative h-[440px] w-80 shrink-0 overflow-hidden rounded-2xl">
           <Image

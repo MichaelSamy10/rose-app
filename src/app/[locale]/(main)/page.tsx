@@ -11,13 +11,15 @@ import { CardDemo } from '@/components/home/hero-section';
 export default function Home() {
   return (
     <div className="bg-white dark:bg-zinc-800">
-      <CardDemo />
-      <OccasionsSection />
-      <SupportSection />
-      <BestSelling />
-      <MostPopular />
-      <About />
-      <Gallery />
+      <div className="mx-auto w-11/12">
+        <CardDemo />
+        <OccasionsSection />
+        <SupportSection />
+        <BestSelling />
+        <MostPopular />
+        <About />
+        <Gallery />
+      </div>
       <Testimonials />
       <Companies />
     </div>

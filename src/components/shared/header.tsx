@@ -19,7 +19,6 @@ import { getTranslations } from 'next-intl/server';
 import ToggleLang from './toggle-lang';
 import { LocationButton } from './location-button';
 
-
 export async function Header() {
   const t = await getTranslations(
     'pages.components.header',
@@ -32,11 +31,11 @@ export async function Header() {
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           <Image
-            src="/assets/images/logo/bb70dbdbb3472a27ffcc4d3baeb8eaceb3873b18.png"
+            src="/assets/images/logo/logo.png"
             alt="Rose Logo"
             width={70}
             height={70}
-            className="h-auto w-auto object-contain"
+            className="h-auto object-contain"
           />
         </Link>
 
@@ -45,7 +44,7 @@ export async function Header() {
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-50 text-maroon-600 dark:bg-zinc-800 dark:text-softPink-300">
             <MapPin className="h-5 w-5" />
           </div>
-          <LocationButton 
+          <LocationButton
             deliverToText={t('deliverTo')}
             locationText={t('location')}
           />

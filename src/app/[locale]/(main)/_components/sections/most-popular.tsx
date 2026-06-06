@@ -23,7 +23,7 @@ export default function MostPopular() {
   }
 
   return (
-    <section className="mx-auto w-11/12">
+    <section className="mx-auto">
       {/* tabs */}
       <div className="my-5 flex items-center justify-between">
         {/* ToDo : hady is working on the component  */}
@@ -67,7 +67,7 @@ export default function MostPopular() {
 
       <Link
         href={`/product`}
-        className="text-semibold mt-6 flex items-center justify-end gap-2 p-2 text-maroon-700"
+        className="text-semibold flex items-center justify-end gap-2 p-2 text-maroon-700"
       >
         View Product
         <ArrowRight />

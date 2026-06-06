@@ -5,6 +5,7 @@ import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useLocale } from 'next-intl';
 
 import { cn } from '@/lib/utils/tailwind-merge';
 import { Button } from '@/components/ui/button';
@@ -63,10 +64,14 @@ const Carousel = React.forwardRef<
     },
     ref,
   ) => {
+    const locale = useLocale();
+    const isRtl = locale === 'ar';
+
     const [carouselRef, api] = useEmblaCarousel(
       {
         ...opts,
         axis: orientation === 'horizontal' ? 'x' : 'y',
+        direction: isRtl ? 'rtl' : 'ltr',
       },
       plugins,
     );
@@ -235,7 +240,7 @@ const CarouselPrevious = React.forwardRef<
         className={cn(
           'absolute h-8 w-8 rounded-full',
           orientation === 'horizontal'
-            ? '-left-12 top-1/2 -translate-y-1/2'
+            ? 'top-1/2 -translate-y-1/2 ltr:-left-5 rtl:-right-5'
             : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
           className,
         )}
@@ -275,7 +280,7 @@ const CarouselNext = React.forwardRef<
         className={cn(
           'absolute h-8 w-8 rounded-full',
           orientation === 'horizontal'
-            ? '-right-12 top-1/2 -translate-y-1/2'
+            ? 'top-1/2 -translate-y-1/2 ltr:-right-5 rtl:-left-5'
             : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',
           className,
         )}
@@ -283,10 +288,7 @@ const CarouselNext = React.forwardRef<
         onClick={scrollNext}
         {...props}
       >
-        <ChevronRight
-          size={25}
-          className="rtl:rotate-180"
-        />
+        <ChevronRight size={25} className="rtl:rotate-180" />
         <span className="sr-only">Next slide</span>
       </Button>
     );

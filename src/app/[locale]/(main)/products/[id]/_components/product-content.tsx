@@ -186,8 +186,7 @@ export default function ProductContent({
                 size={20}
                 className="text-zinc-500"
               />
-              {product.quantity - product.sold}{' '}
-              {t('stock-left')}
+              {product.quantity} {t('stock-left')}
             </p>
           )}
         </div>

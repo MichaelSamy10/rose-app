@@ -4,7 +4,7 @@ import React from 'react';
 export default function BestSellingSkeleton() {
   return (
     <div
-      className="grid animate-pulse grid-cols-1 items-start gap-8 md:grid-cols-4 container mx-auto"
+      className="mx-auto mt-24 grid w-11/12 animate-pulse grid-cols-1 items-start gap-8 md:grid-cols-4"
       aria-hidden
     >
       {/* left content skeleton */}

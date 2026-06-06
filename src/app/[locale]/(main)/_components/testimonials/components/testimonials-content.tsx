@@ -6,6 +6,7 @@ import {
   CarouselItem,
 } from '@/components/ui/carousel';
 import TestimonialItem from './testimonial-item';
+import NoTestimonials from './no-testimonials';
 import AutoScroll, {
   type AutoScrollType,
 } from 'embla-carousel-auto-scroll';
@@ -50,39 +51,43 @@ export default function TestimonialsContent() {
           >
             <div className="container mx-auto overflow-x-hidden overflow-y-visible px-5 py-16">
               {/* Carousel Content */}
-              <CarouselContent className="-ml-16 lg:px-5">
-                {/* Carousel Items */}
-                {(data.testimonials.length < 4
-                  ? [
-                      ...data.testimonials,
-                      ...data.testimonials,
-                    ]
-                  : data.testimonials
-                ).map((testimonial, i) => {
-                  return (
-                    // Carousel Item
-                    <CarouselItem
-                      key={`${testimonial._id}${i}`}
-                      className="flex items-center justify-center pl-16 md:basis-1/2 lg:basis-1/3"
-                    >
-                      <TestimonialItem
-                        name={`${testimonial.user.firstName} ${testimonial.user.lastName}`}
-                        rate={testimonial.rating}
-                        maxRate={5}
-                        comment={testimonial.content}
-                        date={new Date(
-                          testimonial.createdAt,
-                        ).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        })}
-                        imgSrc={testimonial.user.photo}
-                      />
-                    </CarouselItem>
-                  );
-                })}
-              </CarouselContent>
+              {data.testimonials.length == 0 ? (
+                <NoTestimonials />
+              ) : (
+                <CarouselContent className="-ml-16 lg:px-5">
+                  {/* Carousel Items */}
+                  {(data.testimonials.length < 4
+                    ? [
+                        ...data.testimonials,
+                        ...data.testimonials,
+                      ]
+                    : data.testimonials
+                  ).map((testimonial, i) => {
+                    return (
+                      // Carousel Item
+                      <CarouselItem
+                        key={`${testimonial._id}${i}`}
+                        className="flex items-center justify-center pl-16 md:basis-1/2 lg:basis-1/3"
+                      >
+                        <TestimonialItem
+                          name={`${testimonial.user.firstName} ${testimonial.user.lastName}`}
+                          rate={testimonial.rating}
+                          maxRate={5}
+                          comment={testimonial.content}
+                          date={new Date(
+                            testimonial.createdAt,
+                          ).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })}
+                          imgSrc={testimonial.user.photo}
+                        />
+                      </CarouselItem>
+                    );
+                  })}
+                </CarouselContent>
+              )}
             </div>
           </Carousel>
         )}

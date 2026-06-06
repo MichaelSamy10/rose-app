@@ -7,25 +7,49 @@ import { cn } from '@/lib/utils/tailwind-merge';
 import AddToWishlistBtn from '@/components/shared/add-to-wishlist-btn';
 import { Link } from '@/i18n/navigation';
 
-type ProductItemPropsType = { divCustomClasses?: string, imgCustomClasses?: string, href: string } & Pick<Product, '_id' | 'imgCover' | 'title' | 'price' | 'priceAfterDiscount' | 'rateAvg'>
+type ProductItemPropsType = {
+  divCustomClasses?: string;
+  imgCustomClasses?: string;
+  href: string;
+} & Pick<
+  Product,
+  | '_id'
+  | 'imgCover'
+  | 'title'
+  | 'price'
+  | 'priceAfterDiscount'
+  | 'rateAvg'
+>;
 
 export default function ProductItem({
-  imgCover, price, priceAfterDiscount, rateAvg, title, divCustomClasses, imgCustomClasses, href, _id
+  imgCover,
+  price,
+  priceAfterDiscount,
+  rateAvg,
+  title,
+  divCustomClasses,
+  imgCustomClasses,
+  href,
+  _id,
 }: ProductItemPropsType) {
   return (
     <>
-      <div className={cn(
-        "relative z-10 w-72 rounded-xl",
-        divCustomClasses
-      )}>
+      <div
+        className={cn(
+          'relative z-10 w-full rounded-xl',
+          divCustomClasses,
+        )}
+      >
         {/* Add To Wishlist Button */}
         <AddToWishlistBtn productId={_id} />
 
         {/* Product Image */}
-        <div className={cn(
-          "relative h-64 w-full overflow-hidden rounded-xl mb-4",
-          imgCustomClasses
-        )}>
+        <div
+          className={cn(
+            'relative mb-4 h-64 overflow-hidden rounded-xl',
+            imgCustomClasses,
+          )}
+        >
           <Image
             src={imgCover}
             alt={title}
@@ -37,8 +61,10 @@ export default function ProductItem({
         {/* Product Summary */}
         <Link href={href} className="content">
           <div>
-            <h2 className="text-start text-lg font-semibold text-maroon-700 dark:text-pink-200 h-10">
-              {title.length > 30 ? `${title.slice(0, 30)}...` : title}
+            <h2 className="h-10 text-start text-lg font-semibold text-maroon-700 dark:text-pink-200">
+              {title.length > 30
+                ? `${title.slice(0, 30)}...`
+                : title}
             </h2>
           </div>
           <div className="flex items-center justify-between">
@@ -60,7 +86,7 @@ export default function ProductItem({
         </Link>
 
         {/* Badge */}
-        <div className="absolute right-2.5 top-2.5 rtl:right-auto rtl:left-2.5 utl: flex h-4 w-11 items-center justify-center rounded-lg bg-zinc-100">
+        <div className="utl: absolute right-2.5 top-2.5 flex h-4 w-11 items-center justify-center rounded-lg bg-zinc-100 rtl:left-2.5 rtl:right-auto">
           <span className="text-zinc-700">New</span>
         </div>
       </div>

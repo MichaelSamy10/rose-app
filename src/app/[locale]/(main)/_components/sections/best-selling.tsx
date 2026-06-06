@@ -14,8 +14,12 @@ import { Product } from '@/lib/types/product';
 import { Button } from '@/components/ui/button';
 import useBestSellingProducts from '@/hooks/use-products-best-selling';
 import BestSellingSkeleton from '@/components/skeleton/best-selling-skeleton';
+import { useTranslations } from 'next-intl';
 
 export default function BestSelling() {
+  // Translation
+  const t = useTranslations('pages.home.best-selling');
+
   // ^  Get products
   const { data, isLoading } = useBestSellingProducts();
 
@@ -28,28 +32,24 @@ export default function BestSelling() {
       {/* ^ part one */}
       <div className="bg-warning-200 col-span-1 space-y-5">
         <h3 className="text-xl font-semibold tracking-widest text-pink-500 dark:text-maroon-400">
-          Best Selling
+          {t('header.title')}
         </h3>
         <h4 className="text-3xl font-bold text-maroon-700 dark:text-pink-200">
-          <span className="text-pink-500 dark:text-maroon-400">
-            Check Out
-          </span>
-          What Everyone’s
-          <span className="text-pink-500 dark:text-maroon-400">
-            Buying
-          </span>
-          Right Now
+          {t.rich('header.description', {
+            span: (chunk: React.ReactNode) => (
+              <span className="text-pink-500 dark:text-maroon-400">
+                {chunk}
+              </span>
+            ),
+          })}
         </h4>
         <p className="text-sm text-muted-foreground text-zinc-500 dark:text-zinc-400">
-          Not sure what to choose? Start with our best
-          sellers, these are the gifts our customers keep
-          coming back for. Whether you are celebrating a
-          birthday, anniversary or wedding, our top picks
-          are guaranteed to leave a lasting impression.
+          {t('description')}
         </p>
 
         <Button className="flex items-center justify-center gap-5 rounded-lg bg-maroon-600 px-4 py-2 text-white dark:bg-pink-200 dark:text-zinc-800">
-          Explore gifts <ArrowRight />
+          {t('button')}{' '}
+          <ArrowRight className="rtl:rotate-180" />
         </Button>
       </div>
 
@@ -73,9 +73,12 @@ export default function BestSelling() {
                   <ProductItem
                     _id={product._id}
                     href={`/products/${product._id}`}
-                    imgCover={product.imgCover} title={product.title}
+                    imgCover={product.imgCover}
+                    title={product.title}
                     price={product.price}
-                    priceAfterDiscount={product.priceAfterDiscount}
+                    priceAfterDiscount={
+                      product.priceAfterDiscount
+                    }
                     rateAvg={product.rateAvg}
                   />
                 </CarouselItem>

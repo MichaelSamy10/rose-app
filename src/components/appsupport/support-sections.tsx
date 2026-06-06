@@ -3,7 +3,7 @@ import SupportInfo from './support-List';
 
 export default function SupportSection() {
   return (
-    <section className="mx-auto w-[1300px] rounded-2xl bg-maroon-50 p-10">
+    <section className="m-auto rounded-2xl bg-maroon-50 p-10">
       <div className="mx-auto grid grid-cols-4 gap-6">
         {/* section data map */}
         {SupportData.map(item => (

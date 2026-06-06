@@ -7,7 +7,9 @@ import { FOOTER_LINKS } from '@/lib/constants/navigation';
 import { getTranslations } from 'next-intl/server';
 
 export async function Footer() {
-  const t = await getTranslations('pages.components.footer');
+  const t = await getTranslations(
+    'pages.components.footer',
+  );
 
   return (
     <footer className="w-full bg-zinc-800 py-16 text-white">
@@ -16,7 +18,7 @@ export async function Footer() {
         <div className="flex flex-col items-center gap-4 md:items-start md:gap-6 rtl:md:items-end">
           <Link href="/">
             <Image
-              src="/assets/images/logo/bb70dbdbb3472a27ffcc4d3baeb8eaceb3873b18.png"
+              src="/assets/images/logo/logo.png"
               alt="Rose Logo"
               width={160}
               height={160}
