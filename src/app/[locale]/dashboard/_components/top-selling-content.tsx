@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils/tailwind-merge';
 import { DashboardProducts } from '@/lib/types/dashboard-products';
 import {
   getFormatter,
+  getLocale,
   getTranslations,
 } from 'next-intl/server';
 
@@ -12,9 +13,11 @@ const colors = [
 ];
 
 export default async function TopSellingCard() {
+  const locale = await getLocale();
+
   // ^ Translations
   const t = await getTranslations('pages.dashboard');
-  const format = await getFormatter();
+  const format = await getFormatter({ locale });
 
   // ^ fetch data
   const response = await fetch(

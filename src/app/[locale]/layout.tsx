@@ -43,7 +43,12 @@ export function generateStaticParams() {
   return routing.locales.map(locale => ({ locale }));
 }
 
-export async function generateMetadata() {
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: 'en' | 'ar' };
+}) {
+  setRequestLocale(params.locale);
   const t = await getTranslations('pages.home.metadata');
 
   return {
@@ -67,7 +72,7 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   // Get messages for client components
-  const messages = await getMessages();
+  const messages = await getMessages({ locale });
 
   return (
     <html

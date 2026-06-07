@@ -11,7 +11,7 @@ export default function About() {
   const features = t.raw('features') as string[];
 
   return (
-    <section className="container m-auto mt-36 flex h-[24.375rem] w-11/12 gap-20">
+    <section className="container m-auto mt-36 flex h-[24.375rem] gap-20">
       <div className="flex flex-row items-center justify-center gap-2">
         <div className="relative before:absolute before:-inset-2 before:z-0 before:w-64 before:-translate-x-4 before:-translate-y-1.5 before:rotate-[3.09deg] before:rounded-[7.5rem] before:rounded-tl-[3.125rem] before:border-4 before:border-maroon-600 dark:before:border-softPink-400">
           {/* About Images */}
@@ -50,12 +50,7 @@ export default function About() {
         <div className="flex w-11/12 flex-col gap-2">
           <h3 className="text-3xl font-bold text-maroon-700 dark:text-softPink-200">
             {t.rich('title', {
-              finest: (chunk: string) => (
-                <span className="text-softPink-500 dark:text-maroon-400">
-                  {chunk}
-                </span>
-              ),
-              special: (chunk: string) => (
+              span: (chunk: string) => (
                 <span className="text-softPink-500 dark:text-maroon-400">
                   {chunk}
                 </span>

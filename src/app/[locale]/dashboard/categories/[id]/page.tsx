@@ -17,7 +17,7 @@ import {
   useSearchParams,
 } from 'next/navigation';
 import { Link, useRouter } from '@/i18n/navigation';
-import { Image } from 'lucide-react';
+import { Image as Img } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
@@ -116,7 +116,7 @@ export default function UpdateCategoriesPage() {
                   target="_blank"
                   className="w-fite ml-auto mt-1 flex items-center gap-2 rounded-lg border border-gray-200 p-2 text-sm text-blue-600"
                 >
-                  <Image className="h-5 w-5" />
+                  <Img className="h-5 w-5" />
                   {t('view-category-image')}
                 </Link>
               )}

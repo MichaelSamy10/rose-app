@@ -1,117 +1,69 @@
-import { withAuth } from 'next-auth/middleware';
-import createMiddleware from 'next-intl/middleware';
-import { NextRequest, NextResponse } from 'next/server';
-import { routing } from './i18n/routing';
 import { getToken } from 'next-auth/jwt';
+import { NextRequest, NextResponse } from 'next/server';
+import createMiddleware from 'next-intl/middleware';
+import { routing } from './i18n/routing';
 
-const authPages = [
+const intlMiddleware = createMiddleware(routing);
+
+const authRoutes = [
   '/login',
   '/register',
   '/forgot-password',
 ];
 
-// All pages are public EXCEPT dashboard and its nested routes
-const publicPages = ['/(?!.*checkout)(?!dashboard).*'];
-
-// Protected pages that require authentication
-const protectedPages = ['/dashboard', '/dashboard/(.*)'];
-
-const loginToShowPages = ['/checkout', '/checkout/(.*)'];
-
-const handleI18nRouting = createMiddleware(routing);
-
-const authMiddleware = withAuth(
-  function onSuccess(req) {
-    return handleI18nRouting(req);
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => token != null,
-    },
-    pages: {
-      signIn: '/login',
-    },
-  },
-);
-
 export default async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+
+  // 1. Determine if the current route is an Auth Route
+  const isAuthRoute = authRoutes.some(
+    route =>
+      pathname === route ||
+      routing.locales.some(
+        locale => pathname === `/${locale}${route}`,
+      ),
+  );
+
   const token = await getToken({ req });
+  const locale =
+    routing.locales.find(l =>
+      pathname.startsWith(`/${l}`),
+    ) ?? routing.defaultLocale;
 
-  const publicPathnameRegex = RegExp(
-    `^(/(${routing.locales.join('|')}))?(${publicPages
-      .flatMap(p => (p === '/' ? ['', '/'] : p))
-      .join('|')})/?$`,
-    'i',
-  );
+  // 2. Protect routes: If NOT an auth route and NOT logged in -> Redirect to login
+  if (!isAuthRoute) {
+    if (!token) {
+      const loginUrl = new URL(
+        `/${locale}/login`,
+        req.nextUrl.origin,
+      );
+      loginUrl.searchParams.set('callbackUrl', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+    return intlMiddleware(req);
+  }
 
-  const authPathnameRegex = RegExp(
-    `^(/(${routing.locales.join('|')}))?(${authPages
-      .flatMap(p => (p === '/' ? ['', '/'] : p))
-      .join('|')})/?$`,
-    'i',
-  );
-
-  const protectedPathnameRegex = RegExp(
-    `^(/(${routing.locales.join('|')}))?(${protectedPages
-      .flatMap(p => (p === '/' ? ['', '/'] : p))
-      .join('|')})/?$`,
-    'i',
-  );
-
-  const loginToShowPathnameRegex = RegExp(
-    `^(/(${routing.locales.join('|')}))?(${loginToShowPages
-      .flatMap(p => (p === '/' ? ['', '/'] : p))
-      .join('|')})/?$`,
-    'i',
-  );
-
-  const isPublicPage = publicPathnameRegex.test(
-    req.nextUrl.pathname,
-  );
-  const isAuthPage = authPathnameRegex.test(
-    req.nextUrl.pathname,
-  );
-  const isProtectedPage = protectedPathnameRegex.test(
-    req.nextUrl.pathname,
-  );
-  const isLoginToShowPage = loginToShowPathnameRegex.test(
-    req.nextUrl.pathname,
-  );
-
-  // Redirect authenticated users away from auth pages
-  if (isAuthPage && token) {
-    const redirectUrl = new URL('/', req.nextUrl.origin);
-    Object.entries(req.nextUrl.searchParams).forEach(
-      ([key, value]) =>
-        redirectUrl.searchParams.set(key, value),
+  // 3. Prevent logged-in users from accessing Auth Routes
+  if (token) {
+    return NextResponse.redirect(
+      new URL(`/${locale}`, req.nextUrl.origin),
     );
-    return NextResponse.redirect(redirectUrl);
   }
 
-  // Protected pages: require authentication
-  if (isLoginToShowPage) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (authMiddleware as any)(req);
-  }
-
-  if (isProtectedPage && !token) {
-    const redirectUrl = new URL(
-      '/unauthorized',
-      req.nextUrl.origin,
-    );
-    return NextResponse.redirect(redirectUrl);
-  }
-
-  // Public pages: just handle i18n routing
-  if (isPublicPage) {
-    return handleI18nRouting(req);
-  }
-
-  // Fallback: require authentication
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (authMiddleware as any)(req);
+  // 4. Otherwise, let next-intl handle the request
+  return intlMiddleware(req);
 }
 
 export const config = {
-  matcher: ['/((?!api|_next|.*\\..*).*)'],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - assets (public assets)
+     * - favicon.ico (favicon file)
+     * - any file with an extension (e.g. .png, .svg)
+     */
+    '/((?!api|_next/static|_next/image|assets|favicon.ico|.*\\..*).*)',
+  ],
 };

@@ -36,9 +36,7 @@ export default function LoginForm() {
   });
 
   // Function
-  const handleLogin: SubmitHandler<
-    LoginFields
-  > = async data => {
+  const handleLogin: SubmitHandler<LoginFields> = data => {
     login(data);
   };
 
@@ -102,7 +100,7 @@ export default function LoginForm() {
             </div>
 
             {/* remember me checkbox */}
-            <label className="flex items-center gap-2">
+            {/* <label className="flex items-center gap-2">
               <input
                 type="checkbox"
                 className="form-checkbox block h-4 w-4 border-zinc-300 text-maroon-600"
@@ -110,7 +108,7 @@ export default function LoginForm() {
               <span className="block text-zinc-800">
                 {t('rememberMe')}
               </span>
-            </label>
+            </label> */}
           </div>
 
           {/* global */}

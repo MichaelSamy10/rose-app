@@ -20,10 +20,11 @@ export default async function MessagesPage({
 }: {
   params: { locale: 'en' | 'ar' };
 }) {
+  setRequestLocale(locale);
+
   // Translations
   const t = await getTranslations();
   const format = await getFormatter();
-  setRequestLocale(locale);
 
   // Variables
   // Format examples

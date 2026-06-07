@@ -1,3 +1,5 @@
+'use client';
+
 import {
   LogOut,
   MapPinHouse,
@@ -17,13 +19,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Link } from '@/i18n/navigation';
+import { signOut, useSession } from 'next-auth/react';
 interface AccountDropdownProps {
   trigger?: React.ReactNode;
 }
 
-export async function AccountDropdown({
+export function AccountDropdown({
   trigger,
 }: AccountDropdownProps) {
+  const { data: session } = useSession();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -35,7 +40,9 @@ export async function AccountDropdown({
 
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>
-          Jonathan Adrian
+          {session?.user?.firstName +
+            ' ' +
+            session?.user?.lastName}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
@@ -69,7 +76,10 @@ export async function AccountDropdown({
 
           {/* View available keyboard shortcuts */}
           <DropdownMenuItem>
-            <Link href={'/dashboard'} className="flex items-center">
+            <Link
+              href={'/dashboard'}
+              className="flex items-center"
+            >
               <Settings className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
             </Link>
@@ -78,7 +88,7 @@ export async function AccountDropdown({
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => signOut()}>
           <Link
             href={'/login'}
             className="flex items-center"

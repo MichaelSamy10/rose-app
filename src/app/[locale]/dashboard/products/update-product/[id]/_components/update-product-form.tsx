@@ -31,6 +31,7 @@ import { useUpdateProduct } from '../_hooks/use-update-product';
 import { updateProductSchema } from '@/lib/schemas/update-product.schema';
 import { Image as ImageIcon } from 'lucide-react';
 import GalleryDialog from '@/app/[locale]/dashboard/_components/gallery-dialog';
+import { categories } from '@/lib/types/category';
 
 type Props = {
   product: Product;
@@ -280,14 +281,16 @@ export default function UpdateProductForm({
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent position="popper">
-                    {categories?.map(category => (
-                      <SelectItem
-                        key={category._id}
-                        value={category._id}
-                      >
-                        {category.name}
-                      </SelectItem>
-                    ))}
+                    {categories?.map(
+                      (category: categories) => (
+                        <SelectItem
+                          key={category._id}
+                          value={category._id}
+                        >
+                          {category.name}
+                        </SelectItem>
+                      ),
+                    )}
                   </SelectContent>
                 </Select>
               </FormControl>

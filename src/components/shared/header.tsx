@@ -18,11 +18,15 @@ import { Separator } from '@/components/ui/separator';
 import { getTranslations } from 'next-intl/server';
 import ToggleLang from './toggle-lang';
 import { LocationButton } from './location-button';
+import { authOptions } from '@/auth';
+import { getServerSession } from 'next-auth';
 
 export async function Header() {
   const t = await getTranslations(
     'pages.components.header',
   );
+
+  const session = await getServerSession(authOptions);
 
   return (
     <header className="w-full bg-white shadow-sm dark:bg-zinc-800">
@@ -73,7 +77,7 @@ export async function Header() {
                     {t('greeting')}
                   </span>
                   <span className="text-sm font-bold capitalize text-maroon-800 dark:text-zinc-100">
-                    {t('userName')}
+                    {session?.user?.firstName}
                   </span>
                 </div>
                 <ChevronDown className="h-4 w-4 text-zinc-400 dark:text-zinc-500" />

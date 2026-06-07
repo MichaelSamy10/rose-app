@@ -28,7 +28,7 @@ export default function BestSelling() {
   }
 
   return (
-    <section className="mx-auto mb-32 mt-24 grid w-11/12 grid-cols-4 items-center gap-12">
+    <section className="mx-auto mb-32 mt-24 grid grid-cols-4 items-center gap-12">
       {/* ^ part one */}
       <div className="bg-warning-200 col-span-1 space-y-5">
         <h3 className="text-xl font-semibold tracking-widest text-pink-500 dark:text-maroon-400">

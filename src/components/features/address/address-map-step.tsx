@@ -1,22 +1,26 @@
 'use client';
 
-
 // Imports
 
-
 import { useState, useCallback } from 'react';
-import { APIProvider, Map, AdvancedMarker, MapMouseEvent } from '@vis.gl/react-google-maps';
+import {
+  APIProvider,
+  Map,
+  AdvancedMarker,
+  MapMouseEvent,
+} from '@vis.gl/react-google-maps';
 import { MapPin } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { useAddAddress } from '@/hooks/use-add-address';
 import { useUpdateAddress } from '@/hooks/use-update-address';
-import type { Address, AddressFormData } from '../../../lib/types/address';
-
+import type {
+  Address,
+  AddressFormData,
+} from '../../../lib/types/address';
 
 // Types
-
 
 const DEFAULT_CENTER = { lat: 30.0444, lng: 31.2357 };
 
@@ -31,9 +35,7 @@ interface AddressMapStepProps {
   onSave: () => void;
 }
 
-
 // Component
-
 
 /**
  * AddressMapStep - Step 2 of the address wizard: Precise location picker
@@ -52,43 +54,40 @@ export default function AddressMapStep({
   username,
   onSave,
 }: AddressMapStepProps) {
-
   // Context
-
 
   const t = useTranslations('pages.address.map');
 
   // State
 
-
   const initialCenter =
     editingAddress?.latitude && editingAddress?.longitude
-      ? { lat: Number(editingAddress.latitude), lng: Number(editingAddress.longitude) }
+      ? {
+          lat: Number(editingAddress.latitude),
+          lng: Number(editingAddress.longitude),
+        }
       : DEFAULT_CENTER;
 
-  const [selectedLocation, setSelectedLocation] = useState(initialCenter);
+  const [selectedLocation, setSelectedLocation] =
+    useState(initialCenter);
   const [cameraProps, setCameraProps] = useState({
     center: initialCenter,
-    zoom: 14
+    zoom: 14,
   });
-
 
   // Mutation
 
-
-  const { addAddress, isPending: isAdding } = useAddAddress();
-  const { updateAddress, isPending: isUpdating } = useUpdateAddress();
+  const { addAddress, isPending: isAdding } =
+    useAddAddress();
+  const { updateAddress, isPending: isUpdating } =
+    useUpdateAddress();
   const isPending = isAdding || isUpdating;
-
 
   // Variables
 
-
   const isEditing = !!editingAddress;
 
-
   // Handlers
-
 
   /**
    * Update selected location on map click
@@ -96,7 +95,10 @@ export default function AddressMapStep({
    */
   const handleMapClick = useCallback((e: MapMouseEvent) => {
     if (e.detail.latLng) {
-      const newPos = { lat: e.detail.latLng.lat, lng: e.detail.latLng.lng };
+      const newPos = {
+        lat: e.detail.latLng.lat,
+        lng: e.detail.latLng.lng,
+      };
       setSelectedLocation(newPos);
       setCameraProps(prev => ({ ...prev, center: newPos }));
     }
@@ -106,9 +108,20 @@ export default function AddressMapStep({
    * Sync camera state with map interactions
    * @param ev - Camera change event
    */
-  const handleCameraChange = useCallback((ev: { detail: { center: { lat: number, lng: number }, zoom: number } }) => {
-    setCameraProps({ center: ev.detail.center, zoom: ev.detail.zoom });
-  }, []);
+  const handleCameraChange = useCallback(
+    (ev: {
+      detail: {
+        center: { lat: number; lng: number };
+        zoom: number;
+      };
+    }) => {
+      setCameraProps({
+        center: ev.detail.center,
+        zoom: ev.detail.zoom,
+      });
+    },
+    [],
+  );
 
   /**
    * Request user's current geolocation
@@ -116,10 +129,16 @@ export default function AddressMapStep({
   const handleUseCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const newPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        pos => {
+          const newPos = {
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          };
           setSelectedLocation(newPos);
-          setCameraProps(prev => ({ ...prev, center: newPos }));
+          setCameraProps(prev => ({
+            ...prev,
+            center: newPos,
+          }));
         },
         () => toast.error(t('errors.unable')),
       );
@@ -143,7 +162,7 @@ export default function AddressMapStep({
 
     if (editingAddress) {
       updateAddress(
-        { addressId: editingAddress.id, fields: payload },
+        { addressId: editingAddress._id, fields: payload },
         { onSuccess: () => onSave() },
       );
     } else {
@@ -151,15 +170,18 @@ export default function AddressMapStep({
     }
   };
 
-
   // Render
-
 
   return (
     <>
       {/* Google Map */}
-      <div className="relative h-100 rounded-lg overflow-hidden mb-4 border border-gray-200 dark:border-zinc-600">
-        <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ''}>
+      <div className="relative mb-4 h-100 overflow-hidden rounded-lg border border-gray-200 dark:border-zinc-600">
+        <APIProvider
+          apiKey={
+            process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
+            ''
+          }
+        >
           <Map
             style={{ width: '100%', height: '100%' }}
             {...cameraProps}
@@ -173,9 +195,9 @@ export default function AddressMapStep({
             <Button
               variant="secondary"
               onClick={handleUseCurrentLocation}
-              className="absolute px-2 border-2 border-red-500 dark:border-softPink-400 top-4 right-4 rtl:right-auto rtl:left-4 z-10 flex items-center justify-center gap-2 py-2.5 text-sm font-medium"
+              className="absolute right-4 top-4 z-10 flex items-center justify-center gap-2 border-2 border-red-500 px-2 py-2.5 text-sm font-medium rtl:left-4 rtl:right-auto dark:border-softPink-400"
             >
-              <MapPin className="w-4 h-4" />
+              <MapPin className="h-4 w-4" />
               {t('findMe')}
             </Button>
             <AdvancedMarker position={selectedLocation} />
@@ -184,9 +206,10 @@ export default function AddressMapStep({
       </div>
 
       {/* Selected location display */}
-      <div className="mb-4 p-2 bg-gray-50 dark:bg-zinc-800 rounded-lg text-center">
+      <div className="mb-4 rounded-lg bg-gray-50 p-2 text-center dark:bg-zinc-800">
         <p className="text-xs text-gray-600 dark:text-gray-300">
-          📍 {selectedLocation.lat.toFixed(4)}, {selectedLocation.lng.toFixed(4)}
+          📍 {selectedLocation.lat.toFixed(4)},{' '}
+          {selectedLocation.lng.toFixed(4)}
         </p>
       </div>
 
@@ -195,7 +218,7 @@ export default function AddressMapStep({
         <Button
           onClick={handleConfirm}
           disabled={isPending}
-          className="w-full h-12 font-medium rounded-lg text-base"
+          className="h-12 w-full rounded-lg text-base font-medium"
         >
           {isPending
             ? t('saving')

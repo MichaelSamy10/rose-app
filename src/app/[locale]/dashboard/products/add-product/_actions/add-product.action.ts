@@ -18,7 +18,7 @@ export async function addProductAction(formData: FormData) {
   const locale = await getLocale();
 
   const res = await fetch(
-    `${process.env.API_URL}/products`,
+    `${process.env.NEXT_PUBLIC_API_URL}/products`,
     {
       method: 'POST',
       headers: {

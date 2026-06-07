@@ -2,14 +2,18 @@ import React, { Suspense } from 'react';
 import UpdateProductForm from './_components/update-product-form';
 import { Product } from '@/lib/types/product';
 import { getProductDetailsService } from '@/lib/services/product-details.service';
-import { getTranslations } from 'next-intl/server';
+import {
+  getTranslations,
+  setRequestLocale,
+} from 'next-intl/server';
 import UpdateProductFormSkeleton from './_skeleton/update-product-form-skeleton';
 
 export default async function UpdateProduct({
   params,
 }: {
-  params: { id: string };
+  params: { locale: 'en' | 'ar'; id: string };
 }) {
+  setRequestLocale(params.locale);
   const t = await getTranslations(
     'pages.dashboard.products-page.update-product',
   );

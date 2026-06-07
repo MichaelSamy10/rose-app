@@ -51,7 +51,7 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
           inputComponent={InputComponent}
           smartCaret={false}
           value={value || undefined}
-          countrySelectProps={{ error } as any}
+          countrySelectProps={{ error }}
           error={error}
           /**
            * Handles the onChange event.
@@ -78,7 +78,7 @@ const InputComponent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <Input
     className={cn(
-      'rounded-e-lg rounded-s-none rtl:rounded-s-lg rtl:rounded-e-none border-s-0 rtl:border-e-0 rtl:border-s transition-colors group-hover:border-zinc-400 group-focus-within:group-hover:border-maroon-600 dark:group-hover:border-zinc-500 dark:group-focus-within:group-hover:border-softPink-400',
+      'rounded-e-lg rounded-s-none border-s-0 transition-colors group-hover:border-zinc-400 group-focus-within:group-hover:border-maroon-600 rtl:rounded-e-none rtl:rounded-s-lg rtl:border-e-0 rtl:border-s dark:group-hover:border-zinc-500 dark:group-focus-within:group-hover:border-softPink-400',
       className,
     )}
     {...props}
@@ -117,7 +117,7 @@ const CountrySelect = ({
       modal
       onOpenChange={open => {
         setIsOpen(open);
-        open && setSearchValue('');
+        if (open) setSearchValue('');
       }}
     >
       <PopoverTrigger asChild>
@@ -125,7 +125,7 @@ const CountrySelect = ({
           type="button"
           variant="outline"
           className={cn(
-            'flex gap-1 rounded-e-none rounded-s-lg border-r-0 rtl:border-l-0 rtl:border-r border-zinc-200 px-3 group-focus-within:border-maroon-600 group-hover:border-zinc-400 group-hover:bg-transparent group-focus-within:group-hover:border-maroon-600 dark:border-zinc-600 dark:bg-zinc-700 dark:group-focus-within:border-softPink-400 dark:group-hover:border-zinc-500 dark:group-hover:bg-zinc-700 dark:group-focus-within:group-hover:border-softPink-400',
+            'flex gap-1 rounded-e-none rounded-s-lg border-r-0 border-zinc-200 px-3 group-focus-within:border-maroon-600 group-hover:border-zinc-400 group-hover:bg-transparent group-focus-within:group-hover:border-maroon-600 rtl:border-l-0 rtl:border-r dark:border-zinc-600 dark:bg-zinc-700 dark:group-focus-within:border-softPink-400 dark:group-hover:border-zinc-500 dark:group-hover:bg-zinc-700 dark:group-focus-within:group-hover:border-softPink-400',
             error && 'border-red-600 dark:border-red-500',
           )}
           disabled={disabled}
@@ -139,7 +139,7 @@ const CountrySelect = ({
               className={cn(
                 'flex items-center gap-1 text-sm text-muted-foreground',
                 disabled &&
-                'text-zinc-400 dark:text-zinc-600',
+                  'text-zinc-400 dark:text-zinc-600',
               )}
             >
               <span>{selectedCountry}</span>

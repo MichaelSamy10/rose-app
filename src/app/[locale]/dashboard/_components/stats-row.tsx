@@ -8,15 +8,18 @@ import {
 } from 'lucide-react';
 import {
   getFormatter,
+  getLocale,
   getTranslations,
 } from 'next-intl/server';
 
 export default async function StatsRow() {
+  const locale = await getLocale();
+
   // Translation
   const t = await getTranslations(
     'pages.dashboard.overview.row-1',
   );
-  const format = await getFormatter();
+  const format = await getFormatter({ locale });
 
   // Fetch data
   const data = await getAllStatistics();

@@ -44,7 +44,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.accessToken = user.accessToken;
         token.user = user.user;
-        token.rememberMe = user.rememberMe; // store rememberMe
+        // token.rememberMe = user.rememberMe; // store rememberMe
       }
       return token;
     },
@@ -52,9 +52,9 @@ export const authOptions: NextAuthOptions = {
       session.user = token.user;
 
       // persistent session only if rememberMe true
-      if (token.rememberMe !== true) {
-        session.expires = new Date(0).toISOString();
-      }
+      // if (token.rememberMe !== true) {
+      //   session.expires = new Date(0).toISOString();
+      // }
 
       return session;
     },

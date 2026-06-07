@@ -125,16 +125,15 @@ export default function AddressList({
 
   const normalizedAddresses: Address[] = (
     addresses || []
-  ).map((addr: any) => ({
-    _id: addr._id || addr.id,
-    name: addr.username || addr.name || addr.label,
-    category: addr.category || addr.type || tc('other'),
-    street: addr.street || addr.address || '',
-    city: addr.city || '',
-    phone: addr.phone || addr.phoneNumber || '',
-    isDefault: addr.isDefault || false,
-    latitude: addr.lat || addr.latitude,
-    longitude: addr.long || addr.longitude,
+  ).map((addr: Address) => ({
+    _id: addr._id,
+    username: addr.name,
+    // category: addr.category || addr.type || tc('other'),
+    street: addr.street,
+    city: addr.city,
+    phone: addr.phone,
+    lat: addr.lat,
+    long: addr.long,
   }));
 
   return (

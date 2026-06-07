@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl';
 export default function ClearCartBtn({
   cartLength,
 }: {
-  cartLength: number;
+  cartLength: number | undefined;
 }) {
   // translation
   const t = useTranslations('pages.cart');

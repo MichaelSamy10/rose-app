@@ -17,9 +17,9 @@ import {
 // Carousel images data
 const slides = [
   { src: '/images/heroBg1.png', alt: 'Slide 1' },
-  { src: '/images/carousal1.png', alt: 'Slide 2' },
-  { src: '/images/carousal2.png', alt: 'Slide 3' },
-  { src: '/images/carousal3.png', alt: 'Slide 4' },
+  { src: '/images/Carousal1.png', alt: 'Slide 2' },
+  { src: '/images/Carousal2.png', alt: 'Slide 3' },
+  { src: '/images/Carousal3.png', alt: 'Slide 4' },
 ];
 
 export default function CarouselDemo() {
@@ -53,7 +53,7 @@ export default function CarouselDemo() {
     // Carousel
     <Carousel
       setApi={setApi}
-      className="relative h-[440px] w-full max-w-[955px] overflow-x-hidden rounded-2xl [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      className="relative h-[440px] w-full overflow-x-hidden rounded-2xl [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
       {/* Carousel content container */}
       <CarouselContent>

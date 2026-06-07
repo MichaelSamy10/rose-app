@@ -28,6 +28,7 @@ import useAllCategories from '@/hooks/use-all-category';
 import useAllOccasions from '@/hooks/use-all-occasions';
 import { useAddProduct } from '../_hooks/use-add-product';
 import { useEffect } from 'react';
+import { categories } from '@/lib/types/category';
 
 export default function CreateProductForm() {
   // Translations
@@ -320,15 +321,17 @@ export default function CreateProductForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent position="popper">
-                    {categories?.map(category => (
-                      <SelectItem
-                        key={category._id}
-                        value={category._id}
-                        className="capitalize"
-                      >
-                        {category.name}
-                      </SelectItem>
-                    ))}
+                    {categories?.map(
+                      (category: categories) => (
+                        <SelectItem
+                          key={category._id}
+                          value={category._id}
+                          className="capitalize"
+                        >
+                          {category.name}
+                        </SelectItem>
+                      ),
+                    )}
                   </SelectContent>
                 </Select>
               </FormControl>
