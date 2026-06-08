@@ -23,7 +23,10 @@ export default async function middleware(req: NextRequest) {
       ),
   );
 
-  const token = await getToken({ req });
+  const token = await getToken({
+    req,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
   const locale =
     routing.locales.find(l =>
       pathname.startsWith(`/${l}`),
