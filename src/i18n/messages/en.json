@@ -97,6 +97,48 @@
         "title": "Home | Rose App",
         "description": "Home page of the Rose App"
       },
+      "hero-card": {
+        "badge": "Starting From 10.99 EGP",
+        "title": "Special Gifts For The People You Love",
+        "button": "Shop Now",
+        "carousel-content": {
+          "header": "Say it with flowers",
+          "sub-header": "Elegant gifts for every special moment",
+          "button": "I'm buying!"
+        }
+      },
+      "occasions": {
+        "wedding": {
+          "header": "Wedding",
+          "details": "Celebrate Her Forever with a Gift She'll Always Remember"
+        },
+        "engagement": {
+          "header": "Engagement",
+          "details": "Honor the Beginning of a Beautiful Journey Together"
+        },
+        "anniversary": {
+          "header": "Anniversary",
+          "details": "Mark Every Year of Love with a Meaningful Surprise"
+        }
+      },
+      "support": [
+        {
+          "title": "Free Delivery",
+          "description": "For orders above 120 EGP"
+        },
+        {
+          "title": "Get Refund",
+          "description": "Refunds within 30 days"
+        },
+        {
+          "title": "Safe Payment",
+          "description": "100% Secure Payment"
+        },
+        {
+          "title": "24/7 Support",
+          "description": "Contact us at any time"
+        }
+      ],
       "testimonials": {
         "header": {
           "title": "Testimonials",
@@ -285,7 +327,7 @@
       },
       "footer": {
         "appName": "Rose E-Commerce App",
-        "copyright": "All rights reserved | 2025",
+        "copyright": "All rights reserved | {year}",
         "discoverTitle": "Discover our website",
         "newsletterTitle": "Get",
         "newsletterDiscount": "20% Off",

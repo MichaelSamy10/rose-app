@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ProductDetailsSkeleton() {
   return (
-    <div className="container m-auto mb-12 mt-16 flex h-128 animate-pulse flex-row gap-16">
+    <div className="container m-auto mb-12 mt-16 flex h-128 w-11/12 animate-pulse flex-row gap-16">
       {/* Gallery Skeleton */}
       <div className="flex w-1/2 flex-col gap-4">
         {/* Main Image Skeleton */}

@@ -10,7 +10,7 @@ export default function ProductPage({
   searchParams,
 }: BuildSearchparamsProps) {
   return (
-    <div className="container mx-auto mb-44 mt-12 grid grid-cols-4 gap-6">
+    <div className="container mx-auto mb-44 mt-12 grid w-11/12 grid-cols-4 gap-6">
       <div className="filtration col-span-1 space-y-6 border-b border-zinc-100 p-2 pr-6 *:py-2 md:border-b-0 md:border-e">
         {/* By Category */}
         <CategoryFilter searchParams={searchParams} />

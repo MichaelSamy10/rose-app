@@ -13,6 +13,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from '@/components/ui/carousel';
+import { useTranslations } from 'next-intl';
 
 // Carousel images data
 const slides = [
@@ -23,6 +24,11 @@ const slides = [
 ];
 
 export default function CarouselDemo() {
+  // Translation
+  const t = useTranslations(
+    'pages.home.hero-card.carousel-content',
+  );
+
   // Carousel API instance
   const [api, setApi] = useState<CarouselApi | null>(null);
 
@@ -77,20 +83,17 @@ export default function CarouselDemo() {
                 <div className="absolute inset-0 flex items-end p-6 text-white">
                   <div className="flex flex-col gap-3">
                     <h3 className="max-w-[320px] text-4xl font-semibold">
-                      Say it with flowers
+                      {t('header')}
                     </h3>
-                    <p>
-                      Elegant gifts for every special
-                      moment.
-                    </p>
+                    <p>{t('sub-header')}</p>
 
                     {/* Button linking to products page */}
                     <Button
-                      asChild
-                      className="w-fit rounded-xl bg-white text-maroon-600"
+                      variant={'secondary'}
+                      className="w-fit bg-white text-maroon-600"
                     >
                       <Link href="/products">
-                        I&apos;m buying!
+                        {t('button')}
                       </Link>
                     </Button>
                   </div>
@@ -102,18 +105,24 @@ export default function CarouselDemo() {
       </CarouselContent>
 
       {/* Navigation buttons */}
-      <div className="absolute bottom-4 right-4 z-10 flex gap-2 rounded-full bg-white/80 p-2">
+      <div className="absolute bottom-4 right-4 z-10 flex gap-2 rounded-full bg-white/80 p-2 rtl:left-4 rtl:right-auto">
         <button onClick={() => api?.scrollPrev()}>
-          <ChevronLeft size={30} />
+          <ChevronLeft
+            size={30}
+            className="rtl:rotate-180"
+          />
         </button>
 
         <button onClick={() => api?.scrollNext()}>
-          <ChevronRight size={30} />
+          <ChevronRight
+            size={30}
+            className="rtl:rotate-180"
+          />
         </button>
       </div>
 
       {/* Pagination dots */}
-      <div className="absolute right-4 top-4 z-10 flex gap-3">
+      <div className="absolute right-4 top-4 z-10 flex gap-3 rtl:left-4 rtl:right-auto">
         {slides.map((_, index) => (
           <span
             key={index}

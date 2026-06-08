@@ -11,6 +11,10 @@ export async function Footer() {
     'pages.components.footer',
   );
 
+  const copyright = t('copyright', {
+    year: new Date().getFullYear(),
+  });
+
   return (
     <footer className="w-full bg-zinc-800 py-16 text-white">
       <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-12 px-6 md:flex-row md:px-10">
@@ -30,7 +34,7 @@ export async function Footer() {
               {t('appName')}
             </h3>
             <p className="mt-1 text-xs capitalize text-zinc-500">
-              {t('copyright')}
+              {copyright}
             </p>
           </div>
         </div>

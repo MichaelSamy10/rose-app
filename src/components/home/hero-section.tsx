@@ -3,8 +3,12 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import CarouselDemo from './hero-carousel';
+import { useTranslations } from 'next-intl';
 
 export function CardDemo() {
+  // Translations
+  const t = useTranslations('pages.home.hero-card');
+
   return (
     <section className="mx-auto mt-10">
       <div className="flex items-center justify-center gap-6">
@@ -22,17 +26,22 @@ export function CardDemo() {
           <div className="absolute inset-0 flex items-end p-6 text-white">
             <div className="flex flex-col gap-3">
               <span className="w-fit rounded-full bg-white/90 px-3 py-1 text-xs text-maroon-600">
-                Starting from 10.99 EGP
+                {t('badge')}
               </span>
               <h3 className="text-2xl font-semibold leading-snug">
-                Special Gifts For The People You Love
+                {t('title')}
               </h3>
               <Button
                 asChild
-                className="w-fit rounded-xl bg-white text-maroon-600 hover:bg-white"
+                variant={'secondary'}
+                className="w-fit bg-white text-maroon-600"
               >
                 <Link href="/products">
-                  Shop Now <ArrowRight strokeWidth={3} />
+                  {t('button')}{' '}
+                  <ArrowRight
+                    strokeWidth={3}
+                    className="rtl:rotate-180"
+                  />
                 </Link>
               </Button>
             </div>

@@ -16,7 +16,7 @@ export default async function ProductDetails({
   );
 
   return (
-    <section className="container m-auto mb-12 mt-16 flex h-128 flex-row gap-16">
+    <section className="container m-auto mb-12 mt-16 flex h-128 w-11/12 flex-row gap-16">
       {/* Product Gallery */}
       <ProductGallery images={product.images} />
 

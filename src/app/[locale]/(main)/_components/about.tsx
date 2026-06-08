@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
 export default function About() {
   // Translations
@@ -64,9 +65,14 @@ export default function About() {
           </p>
         </div>
 
-        <Button className="w-fit bg-maroon-600 px-5 py-4 text-base dark:bg-softPink-200">
-          {t('button')}
-          <ArrowRight className="rtl:rotate-180" />
+        <Button
+          asChild
+          className="w-fit bg-maroon-600 px-5 py-4 text-base dark:bg-softPink-200"
+        >
+          <Link href={'/products'}>
+            {t('button')}
+            <ArrowRight className="rtl:rotate-180" />
+          </Link>
         </Button>
 
         <ul className="grid w-fit grid-cols-2 gap-x-6">

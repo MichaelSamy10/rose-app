@@ -59,7 +59,7 @@ export default function CheckoutContent() {
       ? mutateCash(values, {
           onSuccess: () => {
             toast.success(t('checkout.success.cash'));
-            router.push('/all-orders');
+            router.push('/products');
           },
         })
       : mutateCredit(values);
