@@ -26,7 +26,7 @@ export default function useLogin() {
       const callbackUrl =
         new URLSearchParams(location.search).get(
           'callbackUrl',
-        ) || '/';
+        ) || `/${location.pathname.split('/')[1] || 'en'}`;
 
       return (location.href = callbackUrl);
     },
