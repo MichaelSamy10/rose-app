@@ -10,10 +10,16 @@ export default function useLogin() {
     isPending,
   } = useMutation({
     mutationFn: async (credentials: LoginFields) => {
+      const callbackUrl =
+        new URLSearchParams(location.search).get(
+          'callbackUrl',
+        ) || `/${location.pathname.split('/')[1] || 'en'}`;
+
       const response = await signIn('credentials', {
         email: credentials.email,
         password: credentials.password,
         redirect: false,
+        callbackUrl,
       });
 
       if (response?.error) {
@@ -22,13 +28,16 @@ export default function useLogin() {
 
       return response;
     },
-    onSuccess: () => {
+    onSuccess: data => {
       const callbackUrl =
         new URLSearchParams(location.search).get(
           'callbackUrl',
         ) || `/${location.pathname.split('/')[1] || 'en'}`;
 
-      return (location.href = callbackUrl);
+      return (location.href =
+        typeof data?.url === 'string'
+          ? data.url
+          : callbackUrl);
     },
   });
   return {

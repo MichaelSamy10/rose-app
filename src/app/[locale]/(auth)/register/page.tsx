@@ -1,5 +1,3 @@
-'use client';
-
 import DecoratedText from '@/components/features/auth/decorated-text';
 import React from 'react';
 import RegisterForm from './_components/register-form';

@@ -2,14 +2,22 @@ import { NextAuthOptions } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { LoginResponse } from './lib/types/auth';
 
+if (!process.env.NEXTAUTH_URL && process.env.VERCEL_URL) {
+  process.env.NEXTAUTH_URL = `https://${process.env.VERCEL_URL}`;
+}
+
 export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/login',
     signOut: '/login',
   },
   secret: process.env.NEXTAUTH_SECRET,
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+  },
   session: {
     strategy: 'jwt',
+    maxAge: 60 * 60 * 24 * 30,
   },
   useSecureCookies: process.env.NODE_ENV === 'production',
   cookies: {
