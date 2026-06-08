@@ -29,6 +29,12 @@ export default async function middleware(req: NextRequest) {
       pathname.startsWith(`/${l}`),
     ) ?? routing.defaultLocale;
 
+  console.log({
+    pathname,
+    isAuthRoute,
+    tokenExists: !!token,
+  });
+
   // 2. Protect routes: If NOT an auth route and NOT logged in -> Redirect to login
   if (!isAuthRoute) {
     if (!token) {
